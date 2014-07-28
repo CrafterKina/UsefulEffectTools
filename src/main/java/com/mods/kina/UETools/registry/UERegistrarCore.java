@@ -3,13 +3,11 @@ package com.mods.kina.UETools.registry;
 import com.mods.kina.UETools.UsefulEffectToolsCore;
 import com.mods.kina.UETools.block.BlockSummonTable;
 import com.mods.kina.UETools.entity.EntityRidden;
-import com.mods.kina.UETools.misc.ItemDeliveryPhone;
-import com.mods.kina.UETools.misc.ItemGrassPart;
-import com.mods.kina.UETools.misc.ItemMycelPart;
-import com.mods.kina.UETools.misc.ItemTileWatcher;
+import com.mods.kina.UETools.misc.*;
 import com.mods.kina.UETools.swords.*;
 import com.mods.kina.UETools.tileentity.TileEntitySummonTable;
 import com.mods.kina.UETools.tools.*;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
@@ -54,8 +52,8 @@ public class UERegistrarCore{
         itemExplosionSword = (new ItemExplosionSword(EXPLOSION));
         itemLightSword = (new ItemLightSword(LIGHT));
         itemTeleportSword = (new ItemTeleportSword(TELEPORT));
-        itemRustySword = (new ItemSword(RUSTY).setUnlocalizedName("itemRustySword").setTextureName("kina:rusty_sword").setCreativeTab(CreativeTabs.tabCombat));
-        itemBrokenSword = (new Item()).setUnlocalizedName("itemBrokenSword").setTextureName("kina:broken_sword").setCreativeTab(CreativeTabs.tabCombat);
+        itemRustySword = (new ItemSword(RUSTY).setUnlocalizedName("itemRustySword").setTextureName("kina:rusty_sword").setCreativeTab(tabUESword));
+        itemBrokenSword = (new Item()).setUnlocalizedName("itemBrokenSword").setTextureName("kina:broken_sword").setCreativeTab(tabUESword);
         itemTntSword = (new ItemTntSword(TNT));
         itemTntPickaxe = (new ItemTntPickaxe(TNT));
         itemCreeperPickaxe = (new ItemCreeperPickaxe(Item.ToolMaterial.EMERALD));
@@ -75,6 +73,7 @@ public class UERegistrarCore{
         itemFastHand = new ItemHandLikeRemover();
         itemDeliveryPhone = new ItemDeliveryPhone();
         itemEnderSword = new ItemEnderSword();
+        itemSuperMover = new ItemSuperMover();
         blockSummonTable=new BlockSummonTable();
     }
     public static void registrarItems(){
@@ -103,11 +102,13 @@ public class UERegistrarCore{
         GameRegistry.registerItem(itemFastHand, "itemFastHand");
         GameRegistry.registerItem(itemDeliveryPhone, "itemDeliveryPhone");
         GameRegistry.registerItem(itemEnderSword,"itemEnderSword");
+        GameRegistry.registerItem(itemSuperMover,"itemSuperMover");
         GameRegistry.registerBlock(blockSummonTable,"blockSummonTable");
     }
 
     public static void registerTileEntity(){
         GameRegistry.registerTileEntity(TileEntitySummonTable.class,"TileEntitySummonTable");
+        NetworkRegistry.INSTANCE.registerGuiHandler(UsefulEffectToolsCore.core, UsefulEffectToolsCore.proxy);
     }
 
     public static void registerEntity(){

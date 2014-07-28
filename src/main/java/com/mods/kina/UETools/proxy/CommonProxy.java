@@ -36,7 +36,7 @@ public class CommonProxy implements IGuiHandler{
         //if(world.getTileEntity(x,y,z)!=null){
             switch(ID){
                 case 0:return new ContainerDPhone(player.inventory,villager,world);
-                case 1:return new ContainerSummonTable(player.inventory,(TileEntitySummonTable)world.getTileEntity(x,y,z));
+                case 1:if(world.getTileEntity(x,y,z)!=null)return new ContainerSummonTable(player.inventory,(TileEntitySummonTable)world.getTileEntity(x,y,z));
             }
         //}
         return null;
@@ -64,7 +64,7 @@ public class CommonProxy implements IGuiHandler{
         //if(world.getTileEntity(x,y,z)!=null){
             switch(ID){
                 case 0:return new GuiMerchant(player.inventory,villager,world,"");
-                case 1:return new GuiSummonTable(player.inventory,(TileEntitySummonTable)world.getTileEntity(x,y,z));
+                case 1:if(world.getTileEntity(x,y,z)!=null)return new GuiSummonTable(player.inventory,(TileEntitySummonTable)world.getTileEntity(x,y,z));
             }
         //}
         return null;

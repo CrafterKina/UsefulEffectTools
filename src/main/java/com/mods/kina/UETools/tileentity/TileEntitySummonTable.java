@@ -10,6 +10,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.Random;
@@ -60,8 +63,20 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
     }
 
     @Override
+    public Packet getDescriptionPacket(){
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        writeToNBT(nbtTagCompound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, nbtTagCompound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+        readFromNBT(pkt.func_148857_g());
+    }
+
+    @Override
     public void updateEntity(){
-        System.out.println(getStackInSlot(0)!=null&&getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone));
+        //System.out.println(getStackInSlot(0)!=null&&getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone));
     }
 
     @Override
@@ -170,16 +185,12 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
         return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && entityplayer.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
     }
 
-    public void openInventory(){
+    public void openInventory(){}
 
-    }
-
-    public void closeInventory(){
-
-    }
+    public void closeInventory(){}
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack){
-        return true;
+        return false;
     }
 }

@@ -49,6 +49,7 @@ public class UEFieldsDeclaration{
     public static Item itemTileWatcher;
     public static Item itemDeliveryPhone;
     public static Item itemEnderSword;
+    public static Item itemSuperMover;
     public static Block blockSummonTable;
     public static final String DUNGEON_CHEST = ChestGenHooks.DUNGEON_CHEST;
 }

@@ -8,7 +8,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerSummonTable extends Container{
-    private static TileEntitySummonTable Table;
+    private TileEntitySummonTable Table;
 
     public ContainerSummonTable(IInventory inventory, TileEntitySummonTable summonTable){
         Table = summonTable;
@@ -65,7 +65,7 @@ public class ContainerSummonTable extends Container{
         return itemstack;
     }
 
-    public static TileEntitySummonTable getTable(){
+    public TileEntitySummonTable getTable(){
         return Table;
     }
 }

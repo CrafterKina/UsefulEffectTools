@@ -18,9 +18,9 @@ import static com.mods.kina.UETools.registry.UERegistrarCore.*;
 @KinaMod
 @Mod(modid = MODID)
 public class UsefulEffectToolsCore{
-    @Mod.Instance(MODID)
+    @Mod.Instance("kina_UETools")
     public static UsefulEffectToolsCore core;
-    @SidedProxy(modId = MODID, clientSide = "com.mods.kina.UETools.proxy.ClientProxy", serverSide = "com.mods.kina.UETools.proxy.CommonProxy")
+    @SidedProxy(modId = "kina_UETools", clientSide = "com.mods.kina.UETools.proxy.ClientProxy", serverSide = "com.mods.kina.UETools.proxy.CommonProxy")
     public static CommonProxy proxy;
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
@@ -33,7 +33,6 @@ public class UsefulEffectToolsCore{
         addRecipes();
         registerTileEntity();
         registerEntity();
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
         ChestGenHooks.addItem(DUNGEON_CHEST, new WeightedRandomChestContent(new ItemStack(itemRustySword), 1, 1, 3));
         ChestGenHooks.getInfo(DUNGEON_CHEST).setMax(10);
         ChestGenHooks.getInfo(DUNGEON_CHEST).setMin(5);
