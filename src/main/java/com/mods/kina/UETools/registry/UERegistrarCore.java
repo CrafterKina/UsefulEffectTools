@@ -69,7 +69,7 @@ public class UERegistrarCore{
         itemMycelPart = (new ItemMycelPart());
         itemEdibleSword = (new ItemEdibleSword(5));
         itemTileWatcher = (new ItemTileWatcher());
-        itemEnderBow = (new ItemCraftSword());
+        //itemEnderBow = (new ItemCraftSword());
         itemFastHand = new ItemHandLikeRemover();
         itemDeliveryPhone = new ItemDeliveryPhone();
         itemEnderSword = new ItemEnderSword();
@@ -92,13 +92,13 @@ public class UERegistrarCore{
         GameRegistry.registerItem(itemLavaSword, "itemLavaSword");
         GameRegistry.registerItem(itemInfinityCobblePickaxe, "itemInfinityCobblePickaxe");
         GameRegistry.registerItem(itemBoneMealSword, "itemBoneMealSword");
-        //GameRegistry.registerItem(itemCraftSword, "itemCraftSword");
+        GameRegistry.registerItem(itemCraftSword, "itemCraftSword");
         GameRegistry.registerItem(itemPickHoe, "itemPickHoe");
         GameRegistry.registerItem(itemGrassPart, "itemGrassPart");
         GameRegistry.registerItem(itemMycelPart, "itemMycelPart");
         GameRegistry.registerItem(itemEdibleSword, "itemEdibleSword");
         GameRegistry.registerItem(itemTileWatcher, "itemTileWatcher");
-        GameRegistry.registerItem(itemEnderBow, "itemEnderBow");
+        //GameRegistry.registerItem(itemEnderBow, "itemEnderBow");
         GameRegistry.registerItem(itemFastHand, "itemFastHand");
         GameRegistry.registerItem(itemDeliveryPhone, "itemDeliveryPhone");
         GameRegistry.registerItem(itemEnderSword,"itemEnderSword");

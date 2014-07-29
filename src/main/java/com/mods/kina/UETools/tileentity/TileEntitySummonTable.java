@@ -81,6 +81,7 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
 
     @Override
     public void markDirty(){
+        super.markDirty();
         if(!worldObj.isRemote){
             if(getStackInSlot(0) != null && getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone)&&!isSpawned){
                 entityRidden = new EntityRidden(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5);

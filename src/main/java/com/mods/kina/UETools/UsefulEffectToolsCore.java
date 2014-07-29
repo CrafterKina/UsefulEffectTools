@@ -20,8 +20,10 @@ import static com.mods.kina.UETools.registry.UERegistrarCore.*;
 public class UsefulEffectToolsCore{
     @Mod.Instance("kina_UETools")
     public static UsefulEffectToolsCore core;
+
     @SidedProxy(modId = "kina_UETools", clientSide = "com.mods.kina.UETools.proxy.ClientProxy", serverSide = "com.mods.kina.UETools.proxy.CommonProxy")
     public static CommonProxy proxy;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         assignItems();
