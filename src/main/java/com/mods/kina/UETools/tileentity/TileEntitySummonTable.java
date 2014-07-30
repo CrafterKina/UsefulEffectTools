@@ -18,48 +18,36 @@ import net.minecraft.tileentity.TileEntity;
 import java.util.Random;
 
 public class TileEntitySummonTable extends TileEntity implements IInventory{
-    private ItemStack[] itemStack=new ItemStack[1];
+    private ItemStack itemStack;
     private boolean isSpawned;
     private EntityRidden entityRidden;
     private EntityVillager entityVillager;
     private Random random = new Random();
 
     public TileEntitySummonTable(EntityRidden entityRidden){
-        entityRidden.setPosition(xCoord+0.5,yCoord+1,zCoord+0.5);
-        this.entityRidden=entityRidden;
+        entityRidden.setPosition(xCoord + 0.5, yCoord + 1, zCoord + 0.5);
+        this.entityRidden = entityRidden;
     }
 
     public void readFromNBT(NBTTagCompound par1NBTTagCompound){
         super.readFromNBT(par1NBTTagCompound);
         NBTTagList nbttaglist = par1NBTTagCompound.getTagList("items", 10);
-        itemStack = new ItemStack[getSizeInventory()];
-
         for(int i = 0; i < nbttaglist.tagCount(); ++i){
             NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-            byte b0 = nbttagcompound1.getByte("slot");
-
-            if(b0 >= 0 && b0 < itemStack.length){
-                itemStack[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-            }
+            itemStack = ItemStack.loadItemStackFromNBT(nbttagcompound1);
         }
-        isSpawned=par1NBTTagCompound.getBoolean("is_spawned");
+        isSpawned = par1NBTTagCompound.getBoolean("is_spawned");
     }
 
     public void writeToNBT(NBTTagCompound par1NBTTagCompound){
         super.writeToNBT(par1NBTTagCompound);
         NBTTagList nbttaglist = new NBTTagList();
-
-        for(int i = 0; i < itemStack.length; ++i){
-            if(itemStack[i] != null){
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("slot", (byte) i);
-                itemStack[i].writeToNBT(nbttagcompound1);
-                nbttaglist.appendTag(nbttagcompound1);
-            }
-        }
-
+        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+        itemStack.writeToNBT(nbttagcompound1);
+        nbttaglist.appendTag(nbttagcompound1);
         par1NBTTagCompound.setTag("items", nbttaglist);
-        par1NBTTagCompound.setBoolean("is_spawned",isSpawned);
+        par1NBTTagCompound.setBoolean("is_spawned", isSpawned);
+        System.out.println("Fine");
     }
 
     @Override
@@ -83,17 +71,16 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
     public void markDirty(){
         super.markDirty();
         if(!worldObj.isRemote){
-            if(getStackInSlot(0) != null && getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone)&&!isSpawned){
+            if(getStackInSlot(0) != null && getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone) && !isSpawned){
                 entityRidden = new EntityRidden(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5);
                 entityVillager = new EntityVillager(worldObj, random.nextInt(5 + VillagerRegistry.getRegisteredVillagers().size()));
                 entityVillager.setPosition(xCoord + 0.5, yCoord + 1, zCoord + 0.5);
                 isSpawned = worldObj.spawnEntityInWorld(entityRidden) & worldObj.spawnEntityInWorld(entityVillager);
                 System.out.println(isSpawned);
-            }
-            else if(isSpawned && getStackInSlot(0) == null){
+            }else if(isSpawned && getStackInSlot(0) == null){
                 entityRidden.setDead();
                 entityVillager.setDead();
-                isSpawned=false;
+                isSpawned = false;
             }
         }
     }
@@ -104,31 +91,31 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
 
     @Override
     public int getSizeInventory(){
-        return itemStack.length;
+        return 1;
     }
 
     @Override
     public ItemStack getStackInSlot(int i){
         if(i < getSizeInventory()){
-            return itemStack[i];
+            return itemStack;
         }else return null;
     }
 
     @Override
     public ItemStack decrStackSize(int i, int j){
-        if(itemStack[i] != null){
+        if(itemStack != null){
             ItemStack itemstack;
 
-            if(itemStack[i].stackSize <= j){
-                itemstack = itemStack[i].copy();
-                itemStack[i].stackSize = 0;
-                itemStack[i] = null;
+            if(itemStack.stackSize <= j){
+                itemstack = itemStack.copy();
+                itemStack.stackSize = 0;
+                itemStack = null;
                 return itemstack;
             }else{
-                itemstack = itemStack[i].splitStack(j);
+                itemstack = itemStack.splitStack(j);
 
-                if(itemStack[i].stackSize == 0){
-                    itemStack[i] = null;
+                if(itemStack.stackSize == 0){
+                    itemStack = null;
                 }
 
                 return itemstack;
@@ -140,9 +127,9 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
 
     @Override
     public ItemStack getStackInSlotOnClosing(int i){
-        if(itemStack[i] != null){
-            ItemStack itemstack = itemStack[i];
-            itemStack[i] = null;
+        if(itemStack != null){
+            ItemStack itemstack = itemStack;
+            itemStack = null;
             return itemstack;
         }else{
             return null;
@@ -152,7 +139,7 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
     @Override
     public void setInventorySlotContents(int i, ItemStack itemstack){
         if(i < 5){
-            itemStack[i] = itemstack;
+            itemStack = itemstack;
 
             if(itemstack != null && itemstack.stackSize > getInventoryStackLimit()){
                 itemstack.stackSize = getInventoryStackLimit();
@@ -186,9 +173,11 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
         return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && entityplayer.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
     }
 
-    public void openInventory(){}
+    public void openInventory(){
+    }
 
-    public void closeInventory(){}
+    public void closeInventory(){
+    }
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack){
