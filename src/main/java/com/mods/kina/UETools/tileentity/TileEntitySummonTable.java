@@ -31,18 +31,18 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
 
     public void readFromNBT(NBTTagCompound par1NBTTagCompound){
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items", 10);
+        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("items", 10);
         itemStack = new ItemStack[getSizeInventory()];
 
         for(int i = 0; i < nbttaglist.tagCount(); ++i){
             NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-            byte b0 = nbttagcompound1.getByte("Slot");
+            byte b0 = nbttagcompound1.getByte("slot");
 
             if(b0 >= 0 && b0 < itemStack.length){
                 itemStack[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
-        isSpawned=par1NBTTagCompound.getBoolean("isSpawned");
+        isSpawned=par1NBTTagCompound.getBoolean("is_spawned");
     }
 
     public void writeToNBT(NBTTagCompound par1NBTTagCompound){
@@ -52,14 +52,14 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
         for(int i = 0; i < itemStack.length; ++i){
             if(itemStack[i] != null){
                 NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Slot", (byte) i);
+                nbttagcompound1.setByte("slot", (byte) i);
                 itemStack[i].writeToNBT(nbttagcompound1);
                 nbttaglist.appendTag(nbttagcompound1);
             }
         }
 
-        par1NBTTagCompound.setTag("Items", nbttaglist);
-        par1NBTTagCompound.setBoolean("isSpawned",isSpawned);
+        par1NBTTagCompound.setTag("items", nbttaglist);
+        par1NBTTagCompound.setBoolean("is_spawned",isSpawned);
     }
 
     @Override
