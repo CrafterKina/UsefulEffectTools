@@ -1,5 +1,7 @@
 package com.mods.kina.UETools.entity;
 
+import com.mods.kina.UETools.registry.UEFieldsDeclaration;
+import com.mods.kina.UETools.tileentity.TileEntitySummonTable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -9,24 +11,26 @@ import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 public class EntityRidden extends Entity{
-    protected double zabutonX;
-    protected double zabutonY;
-    protected double zabutonZ;
-    protected double zabutonYaw;
-    protected double zabutonPitch;
+    protected double ridX;
+    protected double ridY;
+    protected double ridZ;
+    protected double ridYaw;
+    protected double ridPitch;
     protected double velocityX;
     protected double velocityY;
     protected double velocityZ;
     protected int health;
-    //public boolean isDispensed;
+    protected Vec3 tileEntityPos;
 
     protected int boatPosRotationIncrements;
 
@@ -48,6 +52,11 @@ public class EntityRidden extends Entity{
         motionX = 0.0D;
         motionY = 0.0D;
         motionZ = 0.0D;
+    }
+
+    public EntityRidden(World world, double x, double y, double z,TileEntity tileEntity){
+        this(world,x,y,z);
+        tileEntityPos=Vec3.createVectorHelper(tileEntity.xCoord,tileEntity.yCoord,tileEntity.zCoord);
     }
 
     @Override
@@ -79,11 +88,14 @@ public class EntityRidden extends Entity{
     @Override
     protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
         health = nbttagcompound.getShort("Health");
+        int[] tp=nbttagcompound.getIntArray("TileEntityVec");
+        tileEntityPos=Vec3.createVectorHelper(tp[0],tp[1],tp[2]);
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
         nbttagcompound.setShort("Health", (byte)health);
+        nbttagcompound.setIntArray("TileEntityVec", new int[]{(int) tileEntityPos.xCoord, (int) tileEntityPos.yCoord, (int) tileEntityPos.zCoord});
     }
 
     @Override
@@ -116,19 +128,19 @@ public class EntityRidden extends Entity{
         this.setRotation(f, f1);
 
         //super.setPositionAndRotation2(px, py, pz, f, f1, i);
-        //		mod_VZN_zabuton.Debug("ID:%d - %f,  %f, %f", entityId, px, py, pz);
-        //		mod_VZN_zabuton.Debug("ID:%d - %f,  %f, %f", entityId, posX, posY, posZ);
+        //		mod_VZN_rid.Debug("ID:%d - %f,  %f, %f", entityId, px, py, pz);
+        //		mod_VZN_rid.Debug("ID:%d - %f,  %f, %f", entityId, ridX, ridY, ridZ);
 /*
 //        this.setPosition(px, py, pz);
 //        this.setRotation(f, f1);
 		this.boatPosRotationIncrements = i + 5;
 
 
-		this.zabutonX = px;
-		this.zabutonY = py;
-		this.zabutonZ = pz;
-		this.zabutonYaw = (double)f;
-		this.zabutonPitch = (double)f1;
+		this.ridX = px;
+		this.ridY = py;
+		this.ridZ = pz;
+		this.ridYaw = (double)f;
+		this.ridPitch = (double)f1;
 
 //        motionX = velocityX;
 //        motionY = velocityY;
@@ -144,12 +156,29 @@ public class EntityRidden extends Entity{
     }
 
     @Override
+    public void onEntityUpdate(){
+        super.onEntityUpdate();
+        if(!worldObj.isRemote){
+            Vec3 rid = tileEntityPos;
+            TileEntity tileEntity = worldObj.getTileEntity((int)posX, (int)posY, (int)posZ);
+            /*System.out.println(tileEntity);*/
+            if(tileEntity != null && tileEntity instanceof TileEntitySummonTable){
+                TileEntitySummonTable table = (TileEntitySummonTable) tileEntity;
+                if(table.getStackInSlot(0) == null || !table.getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone)){
+                    setDead();
+                }
+            }
+        }
+        //System.out.println("あっぷでーと!!");
+    }
+
+    @Override
     public void onUpdate() {
         super.onUpdate();
 
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
+        this.prevPosX = this.ridX;
+        this.prevPosY = this.ridY;
+        this.prevPosZ = this.ridZ;
 
         // ボートの判定のコピー
         // ボートは直接サーバーと位置情報を同期させているわけではなく、予測位置計算系に値を渡している。
@@ -165,12 +194,12 @@ public class EntityRidden extends Entity{
         if (this.worldObj.isRemote) {
             // Client
             if (this.boatPosRotationIncrements > 0) {
-                var6 = this.posX + (this.zabutonX - this.posX) / (double)this.boatPosRotationIncrements;
-                var8 = this.posY + (this.zabutonY - this.posY) / (double)this.boatPosRotationIncrements;
-                var26 = this.posZ + (this.zabutonZ - this.posZ) / (double)this.boatPosRotationIncrements;
-                var12 = MathHelper.wrapAngleTo180_double(this.zabutonYaw - (double)this.rotationYaw);
+                var6 = this.ridX + (this.ridX - this.ridX) / (double)this.boatPosRotationIncrements;
+                var8 = this.ridY + (this.ridY - this.ridY) / (double)this.boatPosRotationIncrements;
+                var26 = this.ridZ + (this.ridZ - this.ridZ) / (double)this.boatPosRotationIncrements;
+                var12 = MathHelper.wrapAngleTo180_double(this.ridYaw - (double)this.rotationYaw);
                 this.rotationYaw = (float)((double)this.rotationYaw + var12 / (double)this.boatPosRotationIncrements);
-                this.rotationPitch = (float)((double)this.rotationPitch + (this.zabutonPitch - (double)this.rotationPitch) / (double)this.boatPosRotationIncrements);
+                this.rotationPitch = (float)((double)this.rotationPitch + (this.ridPitch - (double)this.rotationPitch) / (double)this.boatPosRotationIncrements);
                 --this.boatPosRotationIncrements;
                 this.setPosition(var6, var8, var26);
                 this.setRotation(this.rotationYaw, this.rotationPitch);
@@ -223,8 +252,8 @@ public class EntityRidden extends Entity{
             // ヘッディング
             this.rotationPitch = 0.0F;
             var8 = (double)this.rotationYaw;
-            var26 = this.prevPosX - this.posX;
-            var12 = this.prevPosZ - this.posZ;
+            var26 = this.prevPosX - this.ridX;
+            var12 = this.prevPosZ - this.ridZ;
 
             if (var26 * var26 + var12 * var12 > 0.001D) {
                 var8 = (double)((float)(Math.atan2(var12, var26) * 180.0D / Math.PI));

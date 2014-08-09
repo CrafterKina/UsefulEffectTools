@@ -1,6 +1,7 @@
 package com.mods.kina.UETools;
 
 import com.mods.kina.KinaCore.toExtends.KinaMod;
+import com.mods.kina.UETools.network.PacketHandler;
 import com.mods.kina.UETools.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -11,6 +12,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
+
 import static com.mods.kina.UETools.registry.UEFieldsDeclaration.*;
 import static com.mods.kina.UETools.registry.UERegistrarCore.*;
 
@@ -27,6 +29,7 @@ public class UsefulEffectToolsCore{
     public void preInit(FMLPreInitializationEvent event){
         assignItems();
         registrarItems();
+        PacketHandler.init();
     }
 
     @EventHandler

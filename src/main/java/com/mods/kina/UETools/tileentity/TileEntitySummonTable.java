@@ -4,53 +4,55 @@ import com.mods.kina.UETools.block.BlockSummonTable;
 import com.mods.kina.UETools.entity.EntityRidden;
 import com.mods.kina.UETools.registry.UEFieldsDeclaration;
 import cpw.mods.fml.common.registry.VillagerRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 
+import java.util.List;
 import java.util.Random;
 
-public class TileEntitySummonTable extends TileEntity implements IInventory{
+public class TileEntitySummonTable extends TileEntity implements IInventory{//TODO 細々したこと
     private ItemStack itemStack;
-    private boolean isSpawned;
+    public boolean isSpawned;
     private EntityRidden entityRidden;
     private EntityVillager entityVillager;
     private Random random = new Random();
 
-    public TileEntitySummonTable(EntityRidden entityRidden){
-        entityRidden.setPosition(xCoord + 0.5, yCoord + 1, zCoord + 0.5);
-        this.entityRidden = entityRidden;
+    public TileEntitySummonTable(){
+        //entityRidden= new EntityRidden(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5);
     }
 
     public void readFromNBT(NBTTagCompound par1NBTTagCompound){
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("items", 10);
-        for(int i = 0; i < nbttaglist.tagCount(); ++i){
-            NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-            itemStack = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-        }
+        /*try{*/
+            itemStack = ItemStack.loadItemStackFromNBT(par1NBTTagCompound.getCompoundTag("item"));
+            //entityRidden = (EntityRidden) EntityList.createEntityFromNBT(par1NBTTagCompound.getCompoundTag("entity"), worldObj);
+        /*}catch(NullPointerException e){
+            itemStack=null;
+            entityRidden=null;
+        }*/
         isSpawned = par1NBTTagCompound.getBoolean("is_spawned");
     }
 
     public void writeToNBT(NBTTagCompound par1NBTTagCompound){
         super.writeToNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = new NBTTagList();
-        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-        itemStack.writeToNBT(nbttagcompound1);
-        nbttaglist.appendTag(nbttagcompound1);
-        par1NBTTagCompound.setTag("items", nbttaglist);
+        NBTTagCompound itemTag=new NBTTagCompound();
+        //NBTTagCompound entityTag=new NBTTagCompound();
+        itemStack.writeToNBT(itemTag);
+        //entityRidden.writeToNBT(entityTag);
+        par1NBTTagCompound.setTag("item", itemTag);
+        //par1NBTTagCompound.setTag("entity",entityTag);
         par1NBTTagCompound.setBoolean("is_spawned", isSpawned);
-        System.out.println("Fine");
     }
 
-    @Override
+    /*@Override
     public Packet getDescriptionPacket(){
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         writeToNBT(nbtTagCompound);
@@ -60,29 +62,59 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
         readFromNBT(pkt.func_148857_g());
-    }
+    }*/
 
     @Override
     public void updateEntity(){
-        //System.out.println(getStackInSlot(0)!=null&&getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone));
+
     }
 
     @Override
     public void markDirty(){
         super.markDirty();
         if(!worldObj.isRemote){
-            if(getStackInSlot(0) != null && getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone) && !isSpawned){
-                entityRidden = new EntityRidden(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5);
+            if(getStackInSlot(0) != null && getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone)&&!isSpawned){
+                if(entityRidden == null||entityRidden.isDead)
+                    entityRidden = new EntityRidden(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5,this);
                 entityVillager = new EntityVillager(worldObj, random.nextInt(5 + VillagerRegistry.getRegisteredVillagers().size()));
                 entityVillager.setPosition(xCoord + 0.5, yCoord + 1, zCoord + 0.5);
-                isSpawned = worldObj.spawnEntityInWorld(entityRidden) & worldObj.spawnEntityInWorld(entityVillager);
-                System.out.println(isSpawned);
-            }else if(isSpawned && getStackInSlot(0) == null){
-                entityRidden.setDead();
-                entityVillager.setDead();
-                isSpawned = false;
+                boolean unused=worldObj.spawnEntityInWorld(entityRidden)&worldObj.spawnEntityInWorld(entityVillager);
+                Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText("召喚"));
+                isSpawned=unused;
+            }
+            if(entityRidden == null||entityRidden.isDead){
+                isSpawned=false;
             }
         }
+    }
+
+    public Entity findNearestEntityWithinAABB(Class p_72857_1_, AxisAlignedBB p_72857_2_){
+        List list = worldObj.getEntitiesWithinAABB(p_72857_1_, p_72857_2_);
+        Entity entity1 = null;
+        double d0 = Double.MAX_VALUE;
+
+        for(int i = 0; i < list.size(); ++i){
+            Entity entity2 = (Entity) list.get(i);
+
+            /*if (entity2 != p_72857_3_)
+            {*/
+            double d1 = getDistanceSqToEntity(entity2);
+
+            if(d1 <= d0){
+                entity1 = entity2;
+                d0 = d1;
+            }
+            //}
+        }
+
+        return entity1;
+    }
+
+    public double getDistanceSqToEntity(Entity p_70068_1_){
+        double d0 = this.xCoord - p_70068_1_.posX;
+        double d1 = this.yCoord - p_70068_1_.posY;
+        double d2 = this.zCoord - p_70068_1_.posZ;
+        return d0 * d0 + d1 * d1 + d2 * d2;
     }
 
     /**

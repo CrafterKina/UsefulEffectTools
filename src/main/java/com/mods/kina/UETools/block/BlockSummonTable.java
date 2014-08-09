@@ -1,7 +1,6 @@
 package com.mods.kina.UETools.block;
 
 import com.mods.kina.UETools.UsefulEffectToolsCore;
-import com.mods.kina.UETools.entity.EntityRidden;
 import com.mods.kina.UETools.registry.UEFieldsDeclaration;
 import com.mods.kina.UETools.tileentity.TileEntitySummonTable;
 import net.minecraft.block.BlockContainer;
@@ -18,7 +17,7 @@ public class BlockSummonTable extends BlockContainer{
     }
 
     public TileEntity createNewTileEntity(World var1, int var2){
-        return new TileEntitySummonTable(new EntityRidden(var1));
+        return new TileEntitySummonTable();
     }
 
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float dx, float dy, float dz){
