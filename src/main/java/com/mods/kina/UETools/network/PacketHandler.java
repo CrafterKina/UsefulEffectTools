@@ -13,7 +13,7 @@ public class PacketHandler{
     public static void init() {
 
         /*IMesssageHandlerクラスとMessageクラスの登録。
-        *第三引数：MessageクラスのMOD内での登録ID。256個登録できる
+        *第三引数：MessageクラスのMOD内での登録ID。256個登録できる(0~255)
         *第四引数：送り先指定。クライアントかサーバーか、Side.CLIENT Side.SERVER*/
         INSTANCE.registerMessage(MessageRightClickHandler.class, MessageRightClick.class, 0, Side.SERVER);
     }

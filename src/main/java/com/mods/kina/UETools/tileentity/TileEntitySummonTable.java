@@ -22,7 +22,6 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{//TO
     private ItemStack itemStack;
     public boolean isSpawned;
     private EntityRidden entityRidden;
-    private EntityVillager entityVillager;
     private Random random = new Random();
 
     public TileEntitySummonTable(){
@@ -76,7 +75,7 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{//TO
             if(getStackInSlot(0) != null && getStackInSlot(0).getItem().equals(UEFieldsDeclaration.itemDeliveryPhone)&&!isSpawned){
                 if(entityRidden == null||entityRidden.isDead)
                     entityRidden = new EntityRidden(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5,this);
-                entityVillager = new EntityVillager(worldObj, random.nextInt(5 + VillagerRegistry.getRegisteredVillagers().size()));
+                EntityVillager entityVillager = new EntityVillager(worldObj, random.nextInt(5 + VillagerRegistry.getRegisteredVillagers().size()));
                 entityVillager.setPosition(xCoord + 0.5, yCoord + 1, zCoord + 0.5);
                 boolean unused=worldObj.spawnEntityInWorld(entityRidden)&worldObj.spawnEntityInWorld(entityVillager);
                 Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText("召喚"));
@@ -93,8 +92,8 @@ public class TileEntitySummonTable extends TileEntity implements IInventory{//TO
         Entity entity1 = null;
         double d0 = Double.MAX_VALUE;
 
-        for(int i = 0; i < list.size(); ++i){
-            Entity entity2 = (Entity) list.get(i);
+        for(Object aList : list){
+            Entity entity2 = (Entity) aList;
 
             /*if (entity2 != p_72857_3_)
             {*/

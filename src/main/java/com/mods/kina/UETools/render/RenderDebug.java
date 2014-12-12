@@ -6,7 +6,6 @@ import net.minecraft.client.model.ModelBoat;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 public class RenderDebug extends Render{
     private static final ResourceLocation boatTextures = new ResourceLocation("textures/entity/boat.png");
@@ -19,7 +18,7 @@ public class RenderDebug extends Render{
     }
 
     public void doRenderZabuton(EntityRidden entityzabuton, double d, double d1, double d2, float f, float f1) {
-        // レンダリング実装
+        /*// レンダリング実装
         // レンダリング
         GL11.glPushMatrix();
         GL11.glTranslatef((float)d, (float)d1, (float)d2);
@@ -28,7 +27,8 @@ public class RenderDebug extends Render{
         getEntityTexture(entityzabuton);
         GL11.glScalef(-1F, -1F, 1.0F);
         modelBoat.render(entityzabuton, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-        GL11.glPopMatrix();
+        GL11.glPopMatrix();*/
+        //不可視
     }
 
     @Override

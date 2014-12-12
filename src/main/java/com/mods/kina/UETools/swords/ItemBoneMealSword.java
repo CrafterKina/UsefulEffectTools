@@ -51,7 +51,6 @@ public class ItemBoneMealSword extends ItemSword{
                     if(igrowable.func_149852_a(p_150919_1_, p_150919_1_.rand, p_150919_2_, p_150919_3_, p_150919_4_)){
                         igrowable.func_149853_b(p_150919_1_, p_150919_1_.rand, p_150919_2_, p_150919_3_, p_150919_4_);
                     }
-
                     par1ItemStack.setItemDamage(b);
                 }
 
@@ -90,9 +89,7 @@ public class ItemBoneMealSword extends ItemSword{
     }
 
     public static boolean func_150919_a(ItemStack p_150919_0_, World p_150919_1_, int p_150919_2_, int p_150919_3_, int p_150919_4_){
-        if(p_150919_1_ instanceof WorldServer)
-            return applyBonemeal(p_150919_0_, p_150919_1_, p_150919_2_, p_150919_3_, p_150919_4_, FakePlayerFactory.getMinecraft((WorldServer) p_150919_1_));
-        return false;
+        return p_150919_1_ instanceof WorldServer && applyBonemeal(p_150919_0_, p_150919_1_, p_150919_2_, p_150919_3_, p_150919_4_, FakePlayerFactory.getMinecraft((WorldServer) p_150919_1_));
     }
 
     @Override

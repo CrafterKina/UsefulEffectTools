@@ -4,6 +4,7 @@ import com.mods.kina.UETools.tab.CreativeTabMisc;
 import com.mods.kina.UETools.tab.CreativeTabSword;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.util.EnumHelper;
@@ -23,6 +24,7 @@ public class UEFieldsDeclaration{
     public static final Item.ToolMaterial BONE = EnumHelper.addToolMaterial("BONE", 2, 200, 1.0F, 0.0F, 1);
     public static final CreativeTabs tabUESword = new CreativeTabSword("UESword");
     public static final CreativeTabs tabUEMisc =  new CreativeTabMisc("UEMisc");
+    public static final Enchantment ENC_AutoRepair=Enchantment.efficiency;
     //public static Item ;
     public static Item itemThunderSword;
     public static Item itemExplosionSword;
@@ -51,5 +53,8 @@ public class UEFieldsDeclaration{
     public static Item itemEnderSword;
     public static Item itemSuperMover;
     public static Block blockSummonTable;
+    public static Block blockLuminousDirt;
+    public static Block blockLuminousFarmland;
+    public static Block blockReinforcedEnchantmentTable;
     public static final String DUNGEON_CHEST = ChestGenHooks.DUNGEON_CHEST;
 }

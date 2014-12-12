@@ -37,11 +37,13 @@ public class UsefulEffectToolsCore{
         addRecipes();
         registerTileEntity();
         registerEntity();
+        new com.mods.kina.UETools.event.EventHandler().registerHandler();
         ChestGenHooks.addItem(DUNGEON_CHEST, new WeightedRandomChestContent(new ItemStack(itemRustySword), 1, 1, 3));
         ChestGenHooks.getInfo(DUNGEON_CHEST).setMax(10);
         ChestGenHooks.getInfo(DUNGEON_CHEST).setMin(5);
     }
 
+    @EventHandler
     public void postInit(FMLPostInitializationEvent event){
     }
 }

@@ -10,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import org.lwjgl.input.Mouse;
 
 public class ItemCraftSword extends Item{
     Minecraft mc=Minecraft.getMinecraft();
@@ -58,12 +57,7 @@ public class ItemCraftSword extends Item{
 
     @Override
     public void onUpdate(ItemStack itemStack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_){
-        if(Mouse.getEventButton()==0&&!pushing){
-            Minecraft.getMinecraft().playerController.onPlayerDamageBlock(getMouseOver(1.0f).blockX,getMouseOver(1.0f).blockY,getMouseOver(1.0f).blockZ,getMouseOver(1.0f).sideHit);
-            pushing=true;
-        }else {
-            pushing=false;
-        }
+
     }
 
     public MovingObjectPosition getMouseOver(float p_78473_1_){

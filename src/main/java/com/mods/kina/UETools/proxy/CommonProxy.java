@@ -1,7 +1,9 @@
 package com.mods.kina.UETools.proxy;
 
 import com.mods.kina.UETools.container.ContainerDPhone;
+import com.mods.kina.UETools.container.ContainerReinforcedEnchantmentTable;
 import com.mods.kina.UETools.container.ContainerSummonTable;
+import com.mods.kina.UETools.gui.GuiReinforcedEnchantmentTable;
 import com.mods.kina.UETools.gui.GuiSummonTable;
 import com.mods.kina.UETools.tileentity.TileEntitySummonTable;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -37,6 +39,7 @@ public class CommonProxy implements IGuiHandler{
             switch(ID){
                 case 0:return new ContainerDPhone(player.inventory,villager,world);
                 case 1:if(world.getTileEntity(x,y,z)!=null)return new ContainerSummonTable(player.inventory,(TileEntitySummonTable)world.getTileEntity(x,y,z));
+                case 2:if(world.getTileEntity(x,y,z)!=null)return new ContainerReinforcedEnchantmentTable(player.inventory,world,x,y,z);
             }
         //}
         return null;
@@ -65,6 +68,7 @@ public class CommonProxy implements IGuiHandler{
             switch(ID){
                 case 0:return new GuiMerchant(player.inventory,villager,world,"");
                 case 1:if(world.getTileEntity(x,y,z)!=null)return new GuiSummonTable(player.inventory,(TileEntitySummonTable)world.getTileEntity(x,y,z));
+                case 2:if(world.getTileEntity(x,y,z)!=null)return new GuiReinforcedEnchantmentTable(player.inventory,world,x,y,z);
             }
         //}
         return null;

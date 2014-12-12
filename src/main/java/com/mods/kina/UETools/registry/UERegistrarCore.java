@@ -1,8 +1,11 @@
 package com.mods.kina.UETools.registry;
 
 import com.mods.kina.UETools.UsefulEffectToolsCore;
+import com.mods.kina.UETools.block.BlockLuminousDirt;
+import com.mods.kina.UETools.block.BlockLuminousFarmland;
 import com.mods.kina.UETools.block.BlockSummonTable;
 import com.mods.kina.UETools.entity.EntityRidden;
+import com.mods.kina.UETools.event.EventHandler;
 import com.mods.kina.UETools.misc.*;
 import com.mods.kina.UETools.swords.*;
 import com.mods.kina.UETools.tileentity.TileEntitySummonTable;
@@ -10,13 +13,14 @@ import com.mods.kina.UETools.tools.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraftforge.common.MinecraftForge;
+
 import static com.mods.kina.UETools.registry.UEFieldsDeclaration.*;
 
 public class UERegistrarCore{
@@ -75,6 +79,9 @@ public class UERegistrarCore{
         itemEnderSword = new ItemEnderSword();
         itemSuperMover = new ItemSuperMover();
         blockSummonTable=new BlockSummonTable();
+        blockLuminousDirt=new BlockLuminousDirt();
+        blockLuminousFarmland=new BlockLuminousFarmland();
+        //blockReinforcedEnchantmentTable=new BlockReinforcedEnchantmentTable();
     }
     public static void registrarItems(){
         GameRegistry.registerItem(itemThunderSword, "itemThunderSword");
@@ -104,15 +111,23 @@ public class UERegistrarCore{
         GameRegistry.registerItem(itemEnderSword,"itemEnderSword");
         GameRegistry.registerItem(itemSuperMover,"itemSuperMover");
         GameRegistry.registerBlock(blockSummonTable,"blockSummonTable");
+        GameRegistry.registerBlock(blockLuminousDirt,"blockLuminousDirt");
+        GameRegistry.registerBlock(blockLuminousFarmland,"blockLuminousFarmland");
+//        GameRegistry.registerBlock(blockReinforcedEnchantmentTable,"blockReinforcedEnchantmentTable");
     }
 
     public static void registerTileEntity(){
         GameRegistry.registerTileEntity(TileEntitySummonTable.class,"TileEntitySummonTable");
+        //GameRegistry.registerTileEntity(TileEntityReinforcedEnchantmentTable.class,"TileEntityReinforcedEnchantmentTable");
         NetworkRegistry.INSTANCE.registerGuiHandler(UsefulEffectToolsCore.core, UsefulEffectToolsCore.proxy);
     }
 
     public static void registerEntity(){
         EntityRegistry.registerModEntity(EntityRidden.class, "MeleeSkeleton", 0, UsefulEffectToolsCore.core, 250, 1, false);
         UsefulEffectToolsCore.proxy.registerRender();
+    }
+
+    public static void registerMisc(){
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 }

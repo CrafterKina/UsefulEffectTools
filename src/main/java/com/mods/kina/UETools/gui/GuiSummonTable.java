@@ -21,7 +21,7 @@ public class GuiSummonTable extends GuiContainer{
      Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
     protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_){
-        this.fontRendererObj.drawString("TransportDropper", this.xSize / 2 - this.fontRendererObj.getStringWidth("TransportDropper") / 2, 6, 4210752);
+        this.fontRendererObj.drawString(dropper.getInventoryName(), this.xSize / 2 - this.fontRendererObj.getStringWidth("TransportDropper") / 2, 6, 4210752);
         this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
