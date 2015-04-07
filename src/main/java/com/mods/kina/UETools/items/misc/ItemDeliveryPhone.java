@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.misc;
+package com.mods.kina.UETools.items.misc;
 
 import com.mods.kina.UETools.container.ContainerDPhone;
 import com.mods.kina.UETools.proxy.CommonProxy;
@@ -41,6 +41,7 @@ public class ItemDeliveryPhone extends Item{
         }
         return par1ItemStack;
     }
+
     public void displayGUIMerchant(IMerchant p_71030_1_, String p_71030_2_,EntityPlayerMP player)
     {
         player.getNextWindowId();

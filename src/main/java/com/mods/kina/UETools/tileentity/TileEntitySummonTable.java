@@ -1,6 +1,6 @@
 package com.mods.kina.UETools.tileentity;
 
-import com.mods.kina.UETools.block.BlockSummonTable;
+import com.mods.kina.UETools.blocks.BlockSummonTable;
 import com.mods.kina.UETools.entity.EntityRidden;
 import com.mods.kina.UETools.registry.UEFieldsDeclaration;
 import cpw.mods.fml.common.registry.VillagerRegistry;

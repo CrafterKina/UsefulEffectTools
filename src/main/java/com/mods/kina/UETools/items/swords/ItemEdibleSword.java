@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.swords;
+package com.mods.kina.UETools.items.swords;
 
 import com.google.common.collect.Multimap;
 import com.mods.kina.UETools.registry.UEFieldsDeclaration;

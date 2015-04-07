@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.swords;
+package com.mods.kina.UETools.items.swords;
 
 import com.mods.kina.UETools.registry.UEFieldsDeclaration;
 import net.minecraft.entity.effect.EntityLightningBolt;

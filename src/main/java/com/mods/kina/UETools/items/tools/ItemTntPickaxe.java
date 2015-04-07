@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.tools;
+package com.mods.kina.UETools.items.tools;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityTNTPrimed;

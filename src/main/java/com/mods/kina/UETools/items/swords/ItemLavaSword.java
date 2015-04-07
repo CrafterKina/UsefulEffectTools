@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.swords;
+package com.mods.kina.UETools.items.swords;
 
 import com.mods.kina.UETools.registry.UEFieldsDeclaration;
 import net.minecraft.block.material.Material;
@@ -10,11 +10,11 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class ItemWaterSword extends ItemSword{
-    public ItemWaterSword(Item.ToolMaterial material){
+public class ItemLavaSword extends ItemSword{
+    public ItemLavaSword(Item.ToolMaterial material){
         super(material);
-        setUnlocalizedName("itemWaterSword");
-        setTextureName("kina:water_sword");
+        setUnlocalizedName("itemLavaSword");
+        setTextureName("kina:lava_sword");
         setCreativeTab(UEFieldsDeclaration.tabUESword);
     }
 
@@ -54,10 +54,10 @@ public class ItemWaterSword extends ItemSword{
             return false;
         }else{
             if(par3World.isAirBlock(par4, par5, par6)){
-                par3World.setBlock(par4, par5, par6, Blocks.flowing_water);
-                par1ItemStack.damageItem(1, par2EntityPlayer);
+                par3World.setBlock(par4, par5, par6, Blocks.flowing_lava);
+                par1ItemStack.damageItem(2, par2EntityPlayer);
             }
-            if(material == Material.water && l == 0){
+            if(material == Material.lava && l == 0){
                 par3World.setBlockToAir(i, j, k);
                 par1ItemStack.damageItem(-1, par2EntityPlayer);
             }

@@ -1,31 +1,22 @@
-package com.mods.kina.UETools.swords;
+package com.mods.kina.UETools.items.swords;
 
 import com.mods.kina.UETools.registry.UEFieldsDeclaration;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class ItemLavaSword extends ItemSword{
-    public ItemLavaSword(Item.ToolMaterial material){
+public class ItemFireSword extends ItemSword{
+    public ItemFireSword(ToolMaterial material){
         super(material);
-        setUnlocalizedName("itemLavaSword");
-        setTextureName("kina:lava_sword");
+        setUnlocalizedName("itemFireSword");
+        setTextureName("kina:fire_sword");
         setCreativeTab(UEFieldsDeclaration.tabUESword);
     }
 
     @Override
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10){
-        MovingObjectPosition movingobjectposition = getMovingObjectPositionFromPlayer(par3World, par2EntityPlayer, true);
-        int i = movingobjectposition.blockX;
-        int j = movingobjectposition.blockY;
-        int k = movingobjectposition.blockZ;
-        Material material = par3World.getBlock(i, j, k).getMaterial();
-        int l = par3World.getBlockMetadata(i, j, k);
         if(par7 == 0){
             --par5;
         }
@@ -54,15 +45,11 @@ public class ItemLavaSword extends ItemSword{
             return false;
         }else{
             if(par3World.isAirBlock(par4, par5, par6)){
-                par3World.setBlock(par4, par5, par6, Blocks.flowing_lava);
-                par1ItemStack.damageItem(2, par2EntityPlayer);
-            }
-            if(material == Material.lava && l == 0){
-                par3World.setBlockToAir(i, j, k);
-                par1ItemStack.damageItem(-1, par2EntityPlayer);
+                par3World.playSoundEffect((double) par4 + 0.5D, (double) par5 + 0.5D, (double) par6 + 0.5D, "fire.ignite", 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
+                par3World.setBlock(par4, par5, par6, Blocks.fire);
             }
 
-
+            par1ItemStack.damageItem(1, par2EntityPlayer);
             return true;
         }
     }

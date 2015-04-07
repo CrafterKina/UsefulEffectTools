@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.tools;
+package com.mods.kina.UETools.items.tools;
 
 import com.mods.kina.UETools.registry.UEFieldsDeclaration;
 import cpw.mods.fml.common.eventhandler.Event;

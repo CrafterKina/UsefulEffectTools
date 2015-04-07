@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.block;
+package com.mods.kina.UETools.blocks;
 
 import com.mods.kina.UETools.registry.UEFieldsDeclaration;
 import net.minecraft.block.BlockDirt;

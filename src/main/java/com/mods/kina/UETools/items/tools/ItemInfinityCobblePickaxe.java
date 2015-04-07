@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.tools;
+package com.mods.kina.UETools.items.tools;
 
 import com.mods.kina.KinaCore.misclib.KinaLib;
 import net.minecraft.creativetab.CreativeTabs;

@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.swords;
+package com.mods.kina.UETools.items.swords;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;

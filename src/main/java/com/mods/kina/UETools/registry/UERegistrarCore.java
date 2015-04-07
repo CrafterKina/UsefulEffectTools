@@ -1,15 +1,15 @@
 package com.mods.kina.UETools.registry;
 
 import com.mods.kina.UETools.UsefulEffectToolsCore;
-import com.mods.kina.UETools.block.BlockLuminousDirt;
-import com.mods.kina.UETools.block.BlockLuminousFarmland;
-import com.mods.kina.UETools.block.BlockSummonTable;
+import com.mods.kina.UETools.blocks.BlockLuminousDirt;
+import com.mods.kina.UETools.blocks.BlockLuminousFarmland;
+import com.mods.kina.UETools.blocks.BlockSummonTable;
 import com.mods.kina.UETools.entity.EntityRidden;
 import com.mods.kina.UETools.event.EventHandler;
-import com.mods.kina.UETools.misc.*;
-import com.mods.kina.UETools.swords.*;
+import com.mods.kina.UETools.items.misc.*;
+import com.mods.kina.UETools.items.swords.*;
+import com.mods.kina.UETools.items.tools.*;
 import com.mods.kina.UETools.tileentity.TileEntitySummonTable;
-import com.mods.kina.UETools.tools.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;

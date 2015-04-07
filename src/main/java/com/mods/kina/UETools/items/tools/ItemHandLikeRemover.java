@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.tools;
+package com.mods.kina.UETools.items.tools;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;

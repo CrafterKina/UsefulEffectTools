@@ -1,4 +1,4 @@
-package com.mods.kina.UETools.misc;
+package com.mods.kina.UETools.items.misc;
 
 import com.mods.kina.UETools.network.MessageRightClick;
 import com.mods.kina.UETools.network.PacketHandler;
